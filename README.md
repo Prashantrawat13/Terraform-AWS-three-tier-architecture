@@ -119,7 +119,7 @@ These can be added to outputs.tf:
 ```
 ---
 
-## 📁 **Terraform Project Structure**
+##  **Terraform Project Structure**
 A simple and clean structure where **each service has its own .tf file**, plus user‑data for EC2 bootstrap scripts.
 
 ```
@@ -154,7 +154,7 @@ three-tier-aws-infra/
 
 ---
 
-## 🚀 **How to Deploy the Infrastructure**
+##  **How to Deploy the Infrastructure**
 Follow these steps to deploy your three‑tier architecture on AWS using Terraform.
 
 ### **1️⃣ Initialize Terraform**
