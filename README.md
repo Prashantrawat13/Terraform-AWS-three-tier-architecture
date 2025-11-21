@@ -5,7 +5,7 @@ This README provides an appealing, GitHub-ready overview of the architecture, re
 
 ---
 
-## 📘 **Architecture Summary**
+##  **Architecture Summary**
 This Terraform project provisions:
 - **1 VPC** spanning multiple Availability Zones
 - **6 Subnets** (2 per tier)
@@ -22,7 +22,7 @@ This Terraform project provisions:
 
 ---
 
-## 🧱 **Infrastructure Layout**
+##  **Infrastructure Layout**
 ### **VPC & Subnets**
 - **VPC:** Main private networking boundary for the project
 - **Subnets:**
@@ -33,7 +33,7 @@ This Terraform project provisions:
 
 ---
 
-## 🌐 **Networking Components**
+##  **Networking Components**
 ### **Internet Gateway (IGW)**
 Allows outbound internet access for public tier resources.
 
@@ -48,7 +48,7 @@ Enables private subnets to access the internet **securely without exposing them 
 
 ---
 
-## 🔐 **Security Groups (5 Total)**
+##  **Security Groups (5 Total)**
 1. **External ALB SG** → Allows HTTP/HTTPS from the internet
 2. **Web Tier EC2 SG** → Allows traffic only from the External ALB
 3. **Internal ALB SG** → Receives traffic from Web Tier
@@ -57,7 +57,7 @@ Enables private subnets to access the internet **securely without exposing them 
 
 ---
 
-## ⚖️ **Load Balancers & Target Groups**
+##  **Load Balancers & Target Groups**
 ### **External ALB – Web Tier**
 - Public-facing
 - Listens on **80/443**
@@ -70,7 +70,7 @@ Enables private subnets to access the internet **securely without exposing them 
 
 ---
 
-## 🖥️ **Compute Layer – EC2 + Auto Scaling**
+##  **Compute Layer – EC2 + Auto Scaling**
 ### **Web Tier**
 - **Launch Template** (AMI, instance type, security group, user data)
 - **Auto Scaling Group** across public subnets
@@ -83,7 +83,7 @@ Enables private subnets to access the internet **securely without exposing them 
 
 ---
 
-## 🗄️ **Database Layer – Amazon RDS MySQL**
+##  **Database Layer – Amazon RDS MySQL**
 - **DB Subnet Group** created using private DB subnets
 - **MySQL RDS Instance** deployed in private tier
 - Secured using the DB MySQL SG
@@ -91,7 +91,7 @@ Enables private subnets to access the internet **securely without exposing them 
 
 ---
 
-## 🔄 **Terraform Deployment Flow**
+##  **Terraform Deployment Flow**
 1. Create VPC
 2. Create Subnets
 3. Provision IGW & NAT Gateway
@@ -109,8 +109,6 @@ Enables private subnets to access the internet **securely without exposing them 
 These can be added to outputs.tf:
 - External ALB DNS
 - Internal ALB DNS
-- RDS Endpoint
-- ASG names
 
 ---
 
@@ -127,34 +125,31 @@ A simple and clean structure where **each service has its own .tf file**, plus u
 ```
 three-tier-aws-infra/
 │
-├── main.tf
-├── variables.tf
-├── outputs.tf
-├── provider.tf
+├── main.tf                || # AWS provider configuration
+├── variables.tf           || # Input variables for customization
+├── terraform.tfvars       || # Put the values of variables
+├── outputs.tf             || # Output values for reference
+├── provider.tf            || # Terraform version configuration and remote backend
 │
-├── vpc.tf
-├── subnets.tf
-├── route-tables.tf
-├── internet-gateway.tf
-├── nat-gateway.tf
+├── vpc.tf                 || # VPC configuration
+├── subnets.tf             || # Subnets configuration
+├── route-tables.tf        || # Routing configuration for public and private Route tables and associating Subnets
+├── internet-gateway.tf    || # Creating Internet Gateway
+├── nat-gateway.tf         || # Creating Nat Gateway
 │
-├── security-groups.tf
+├── security-group.tf     || # Defines all 5 Security Groups
 │
-├── external-alb.tf
-├── internal-alb.tf
-├── target-groups.tf
+├── external-alb.tf        || # Configures External ALBs, Target Groups, and Listeners
+├── internal-alb.tf        || # Configures Internal ALBs, Target Groups, and Listeners
 │
-├── web-launch-template.tf
-├── app-launch-template.tf
-├── web-asg.tf
-├── app-asg.tf
+├── web-asg.tf             || # Defines EC2 Launch Templates and Auto Scaling Groups for web-tier
+├── app-asg.tf             || # Defines EC2 Launch Templates and Auto Scaling Groups for app-tier
 │
-├── rds-subnet-group.tf
-├── rds-instance.tf
+├── rds-instance.tf        || # Defines the DB Subnet Group and RDS MySQL Instance
 │
 └── user-data/
-       ├── app-script.sh
-       └── web-script.sh
+       ├── app-script.sh   || # Script to run on Web-tier Instances
+       └── web-script.sh   || # Script to run on Application-tier Instances
 ```
 
 ---
@@ -201,17 +196,10 @@ Cleanly removes all resources.
 
 ---
 
-## 📚 **Conclusion****
+##  **Conclusion****
 This Terraform setup creates a fully modular, scalable, and secure **3-tier AWS environment** suitable for production-grade workloads. It follows AWS best practices, ensuring:
 - High availability
 - Network isolation
 - Secure communication between tiers
 - Automatic scaling
-
-If you'd like, I can also generate:
-✅ Terraform folder structure
-✅ A more visual architecture diagram
-✅ A prettier GitHub badge section
-
-Just tell me! 🚀
 
