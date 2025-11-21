@@ -112,11 +112,11 @@ These can be added to outputs.tf:
 
 ---
 
-##  **Visual Architecture Diagram **
-```
+##  **Visual Architecture Diagram**
+
 ![three_tier_design](https://github.com/user-attachments/assets/e7472151-9cf4-4e89-9437-0b8655ed231a)
 
-```
+
 ---
 
 ##  **Terraform Project Structure**
